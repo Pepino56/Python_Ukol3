@@ -2,7 +2,8 @@ import os
 from colorama import Fore
 
 def otevriSouborTXT():
-    """Načtení slovníku českých slov a jeho vrácení v proměnné"""
+    """Funkce, která provede načtení souboru a jeho vrácení v proměnné"""
+
     with open("slovnik_cs_CZ_utf8.txt", "r", encoding="utf-8") as slovnikTXT:
         slovnik = slovnikTXT.readlines()
     return slovnik
@@ -10,37 +11,74 @@ def otevriSouborTXT():
 def zadejSlovo():
     """"""
 
-def porovnejSlovo(slovo):
-    """Určí zda se slovo nachází ve slovníku"""
-    if slovo in slovnikBezEnter:
+def porovnejSlovo(slovo, slovnik):
+    """Funkce, která určí zda se slovo nachází ve slovníku"""
+
+    if slovo in slovnik:
         return True
     else:
         return False
        
-            
+def urciKrajniPismena(slovo):
+    """Funkce, která určí první a poslední písmeno vloženého slova"""
+    prvni = slovo[0]
+    posledni = slovo[-1]
+    return [prvni, posledni]
 
-def urciKrajniPismena():
-    """"""
+def main():
+    bodyHrac1 = 0
+    bodyHrac2 = 0
+    hrac = 1
+    maxScore = 10
+    krajniPismena = ['a', 'a']
 
-#Volání metody pro načtení je ošetřeno try-except
-try:
-    #nactenySlovnik = otevriSouborTXT()
-    print("Seznam je načtený.")
-    slovnikBezEnter = [s.replace('\n', '').lower() for s in otevriSouborTXT()] #odstraní znak \n ze seznamu, poté je možné porovnat zadané slovo
-except Exception as ex:
-    print(f"Došlo k chybě při práci se souborem: {ex}")
-
-
-vstupniSlovo = "OHAŘ".lower()
-trefa = porovnejSlovo(vstupniSlovo)
-print(trefa)
-bodyHrac1 = 0
-bodyHrac2 = 0
-maxScore = 10
-# while bodyHrac1 < maxScore or bodyHrac2 < maxScore:
-#     input("Hraje hráč 1.")
+    #Volání metody pro načtení je ošetřeno try-except
+    try:
+        #odstraní znak \n ze seznamu, poté je možné porovnat zadané slovo
+        slovnikBezEnter = [s.replace('\n', '').lower() for s in otevriSouborTXT()]
+        print("Soubor je načtený.")
+    except Exception as ex:
+        print(f"Došlo k chybě při práci se souborem: {ex}")
 
 
+    while bodyHrac1 < maxScore or bodyHrac2 < maxScore:
+        if hrac == 1:
+            print(f"Hraje hráč 1. Stav bodů: {bodyHrac1}")
+            slovoH1 = input(f"Napis slovo které začíná na písmeno {krajniPismena[1]}: ")
+            if porovnejSlovo(slovoH1, slovnikBezEnter) == True:
+                krajniPismena = urciKrajniPismena(slovoH1)
+                print(f"Slovo {Fore.LIGHTGREEN_EX + slovoH1 + Fore.RESET} nalezeno v českém slovníku. Poslední písmeno je: {Fore.CYAN + krajniPismena[1] + Fore.RESET}.")
+                hrac = 2
+                bodyHrac1 += 1
+            else:
+                print(f"Slovo {Fore.LIGHTRED_EX + slovoH1 + Fore.RESET} se nenachází v českém slovníku")
+        
+        elif hrac == 2:
+            print(f"Hraje hráč 2. Stav bodů: {bodyHrac2}")
+            slovoH2 = input(f"Napis slovo které začíná na písmeno {krajniPismena[1]}: ")
+            if porovnejSlovo(slovoH2, slovnikBezEnter) == True:
+                    krajniPismena = urciKrajniPismena(slovoH2)
+                    print(f"Slovo {Fore.LIGHTGREEN_EX + slovoH2 + Fore.RESET} nalezeno v českém slovníku. Poslední písmeno je: {Fore.CYAN + krajniPismena[1] + Fore.RESET}.")
+                    hrac = 1
+                    bodyHrac2 += 1
+            else:
+                print(f"Slovo {Fore.LIGHTRED_EX + slovoH1 + Fore.RESET} se nenachází v českém slovníku")
+    
+    print(f"Konec hry. Vyrál hráč ")
+       
 
 
-#print(nactenySlovnik)
+
+
+
+main()
+
+# 
+    #     input("Hraje hráč 1.")
+
+    #vstupniSlovo = "lOHAŘ".lower()
+#trefa = porovnejSlovo(vstupniSlovo, slovnikBezEnter)
+    # if trefa == True:
+    #     print("trefa")
+    # else:
+    #     print("netrafa")
