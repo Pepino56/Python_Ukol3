@@ -41,44 +41,37 @@ def main():
         print(f"Došlo k chybě při práci se souborem: {ex}")
 
 
-    while bodyHrac1 < maxScore or bodyHrac2 < maxScore:
+    while bodyHrac1 < maxScore and bodyHrac2 < maxScore:
+        print()
         if hrac == 1:
             print(f"Hraje hráč 1. Stav bodů: {bodyHrac1}")
             slovoH1 = input(f"Napis slovo které začíná na písmeno {krajniPismena[1]}: ")
             if porovnejSlovo(slovoH1, slovnikBezEnter) == True:
-                krajniPismena = urciKrajniPismena(slovoH1)
-                print(f"Slovo {Fore.LIGHTGREEN_EX + slovoH1 + Fore.RESET} nalezeno v českém slovníku. Poslední písmeno je: {Fore.CYAN + krajniPismena[1] + Fore.RESET}.")
-                hrac = 2
-                bodyHrac1 += 1
+                if slovoH1[0] == krajniPismena[1]:
+                    krajniPismena = urciKrajniPismena(slovoH1)
+                    print(f"Slovo {Fore.LIGHTGREEN_EX + slovoH1 + Fore.RESET} nalezeno v českém slovníku. Poslední písmeno je: {Fore.CYAN + krajniPismena[1] + Fore.RESET}.")
+                    bodyHrac1 += 1
+                else:
+                       print(f"Slovo {slovoH1} nezačíná na {krajniPismena[1]}.")
+                hrac = 2            
             else:
                 print(f"Slovo {Fore.LIGHTRED_EX + slovoH1 + Fore.RESET} se nenachází v českém slovníku")
-        
+                hrac = 2
+
         elif hrac == 2:
             print(f"Hraje hráč 2. Stav bodů: {bodyHrac2}")
             slovoH2 = input(f"Napis slovo které začíná na písmeno {krajniPismena[1]}: ")
             if porovnejSlovo(slovoH2, slovnikBezEnter) == True:
-                    krajniPismena = urciKrajniPismena(slovoH2)
-                    print(f"Slovo {Fore.LIGHTGREEN_EX + slovoH2 + Fore.RESET} nalezeno v českém slovníku. Poslední písmeno je: {Fore.CYAN + krajniPismena[1] + Fore.RESET}.")
-                    hrac = 1
-                    bodyHrac2 += 1
+                    if slovoH2[0] == krajniPismena[1]:
+                        krajniPismena = urciKrajniPismena(slovoH2)
+                        print(f"Slovo {Fore.LIGHTGREEN_EX + slovoH2 + Fore.RESET} nalezeno v českém slovníku. Poslední písmeno je: {Fore.CYAN + krajniPismena[1] + Fore.RESET}.")
+                        bodyHrac2 += 1
+                    else:
+                        print(f"Slovo {slovoH2} nezačíná na {krajniPismena[1]}.")
+                    hrac = 1                    
             else:
-                print(f"Slovo {Fore.LIGHTRED_EX + slovoH1 + Fore.RESET} se nenachází v českém slovníku")
-    
-    print(f"Konec hry. Vyrál hráč ")
+                print(f"Slovo {Fore.LIGHTRED_EX + slovoH2 + Fore.RESET} se nenachází v českém slovníku")
+                hrac = 1
+    print(f"Konec hry. Hráč č.{hrac} prohrál.")
        
-
-
-
-
-
 main()
-
-# 
-    #     input("Hraje hráč 1.")
-
-    #vstupniSlovo = "lOHAŘ".lower()
-#trefa = porovnejSlovo(vstupniSlovo, slovnikBezEnter)
-    # if trefa == True:
-    #     print("trefa")
-    # else:
-    #     print("netrafa")
