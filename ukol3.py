@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+#Slovní fotbal. Josef Pluhař AIK2
+
 import os
 from colorama import Fore
 
@@ -7,9 +12,6 @@ def otevriSouborTXT():
     with open("slovnik_cs_CZ_utf8.txt", "r", encoding="utf-8") as slovnikTXT:
         slovnik = slovnikTXT.readlines()
     return slovnik
-
-def zadejSlovo():
-    """"""
 
 def porovnejSlovo(slovo, slovnik):
     """Funkce, která určí zda se slovo nachází ve slovníku"""
@@ -52,7 +54,7 @@ def main():
                     print(f"Slovo {Fore.LIGHTGREEN_EX + slovoH1 + Fore.RESET} nalezeno v českém slovníku. Poslední písmeno je: {Fore.CYAN + krajniPismena[1] + Fore.RESET}.")
                     bodyHrac1 += 1
                 else:
-                       print(f"Slovo {slovoH1} nezačíná na {krajniPismena[1]}.")
+                       print(f"Slovo {Fore.LIGHTRED_EX + slovoH1 + Fore.RESET} nezačíná na {krajniPismena[1]}.")
                 hrac = 2            
             else:
                 print(f"Slovo {Fore.LIGHTRED_EX + slovoH1 + Fore.RESET} se nenachází v českém slovníku")
@@ -62,16 +64,18 @@ def main():
             print(f"Hraje hráč 2. Stav bodů: {bodyHrac2}")
             slovoH2 = input(f"Napis slovo které začíná na písmeno {krajniPismena[1]}: ")
             if porovnejSlovo(slovoH2, slovnikBezEnter) == True:
-                    if slovoH2[0] == krajniPismena[1]:
-                        krajniPismena = urciKrajniPismena(slovoH2)
-                        print(f"Slovo {Fore.LIGHTGREEN_EX + slovoH2 + Fore.RESET} nalezeno v českém slovníku. Poslední písmeno je: {Fore.CYAN + krajniPismena[1] + Fore.RESET}.")
-                        bodyHrac2 += 1
-                    else:
-                        print(f"Slovo {slovoH2} nezačíná na {krajniPismena[1]}.")
-                    hrac = 1                    
+                if slovoH2[0] == krajniPismena[1]:
+                    krajniPismena = urciKrajniPismena(slovoH2)
+                    print(f"Slovo {Fore.LIGHTGREEN_EX + slovoH2 + Fore.RESET} nalezeno v českém slovníku. Poslední písmeno je: {Fore.CYAN + krajniPismena[1] + Fore.RESET}.")
+                    bodyHrac2 += 1
+                else:
+                    print(f"Slovo {Fore.LIGHTRED_EX + slovoH2 + Fore.RESET} nezačíná na {krajniPismena[1]}.")
+                hrac = 1                    
             else:
                 print(f"Slovo {Fore.LIGHTRED_EX + slovoH2 + Fore.RESET} se nenachází v českém slovníku")
                 hrac = 1
-    print(f"Konec hry. Hráč č.{hrac} prohrál.")
+    print()
+    print(f"Konec hry. {Fore.RED}Hráč č.{hrac} prohrál.{Fore.RESET}")
+    print()
        
 main()
